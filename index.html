@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ShopCheck — jouw kortingsrekenaar</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%0A%20%20%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%23E11D74%27/%3E%0A%0A%20%20%3C%21--%20basket%20handle%20--%3E%0A%20%20%3Cpath%20d%3D%22M%2020%2026%20Q%2032%2010%2044%2026%22%20stroke%3D%22white%22%20stroke-width%3D%223%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%0A%0A%20%20%3C%21--%20basket%20body%20%28trapezoid%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M%2016%2026%20L%2048%2026%20L%2044%2046%20Q%2044%2049%2041%2049%20L%2023%2049%20Q%2020%2049%2020%2046%20Z%22%20fill%3D%22white%22/%3E%0A%0A%20%20%3C%21--%20basket%20ribs%20--%3E%0A%20%20%3Cline%20x1%3D%2224%22%20y1%3D%2230%22%20x2%3D%2226%22%20y2%3D%2245%22%20stroke%3D%22%23E11D74%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cline%20x1%3D%2232%22%20y1%3D%2230%22%20x2%3D%2232%22%20y2%3D%2245%22%20stroke%3D%22%23E11D74%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cline%20x1%3D%2240%22%20y1%3D%2230%22%20x2%3D%2238%22%20y2%3D%2245%22%20stroke%3D%22%23E11D74%22%20stroke-width%3D%222%22/%3E%0A%0A%20%20%3C%21--%20price%20tag%20--%3E%0A%20%20%3Cg%20transform%3D%22translate%2838%2C10%29%20rotate%2835%29%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M0%204%20L10%204%20L16%2010%20L10%2016%20L0%2016%20Q%20-2%2016%20-2%2014%20L-2%206%20Q%20-2%204%200%204%20Z%22%20fill%3D%22%230F9D65%22%20stroke%3D%22white%22%20stroke-width%3D%221.2%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%222.5%22%20cy%3D%228.5%22%20r%3D%221.4%22%20fill%3D%22white%22/%3E%0A%20%20%3C/g%3E%0A%0A%20%20%3C%21--%20diagonal%20ribbon%20banner%2C%20bottom-left%20to%20top-right%20--%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%22-14%22%20y%3D%2227%22%20width%3D%2292%22%20height%3D%2213%22%20fill%3D%22%230F1420%22%20fill-opacity%3D%220.82%22%20transform%3D%22rotate%28-45%2032%2032%29%22/%3E%0A%20%20%20%20%3Ctext%20x%3D%2232%22%20y%3D%2236.2%22%20transform%3D%22rotate%28-45%2032%2032%29%22%20text-anchor%3D%22middle%22%0A%20%20%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-weight%3D%22bold%22%20font-size%3D%228.6%22%0A%20%20%20%20%20%20%20%20%20%20letter-spacing%3D%220.3%22%20fill%3D%22white%22%3ESHOPCHECKER%3C/text%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E%0A">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%0A%20%20%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%23E11D74%27/%3E%0A%0A%20%20%3C%21--%20basket%20handle%20--%3E%0A%20%20%3Cpath%20d%3D%22M%2020%2026%20Q%2032%2010%2044%2026%22%20stroke%3D%22white%22%20stroke-width%3D%223%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%0A%0A%20%20%3C%21--%20basket%20body%20%28trapezoid%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M%2016%2026%20L%2048%2026%20L%2044%2046%20Q%2044%2049%2041%2049%20L%2023%2049%20Q%2020%2049%2020%2046%20Z%22%20fill%3D%22white%22/%3E%0A%0A%20%20%3C%21--%20basket%20ribs%20--%3E%0A%20%20%3Cline%20x1%3D%2224%22%20y1%3D%2230%22%20x2%3D%2226%22%20y2%3D%2245%22%20stroke%3D%22%23E11D74%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cline%20x1%3D%2232%22%20y1%3D%2230%22%20x2%3D%2232%22%20y2%3D%2245%22%20stroke%3D%22%23E11D74%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cline%20x1%3D%2240%22%20y1%3D%2230%22%20x2%3D%2238%22%20y2%3D%2245%22%20stroke%3D%22%23E11D74%22%20stroke-width%3D%222%22/%3E%0A%0A%20%20%3C%21--%20price%20tag%20--%3E%0A%20%20%3Cg%20transform%3D%22translate%2838%2C10%29%20rotate%2835%29%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M0%204%20L10%204%20L16%2010%20L10%2016%20L0%2016%20Q%20-2%2016%20-2%2014%20L-2%206%20Q%20-2%204%200%204%20Z%22%20fill%3D%22%230F9D65%22%20stroke%3D%22white%22%20stroke-width%3D%221.2%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%222.5%22%20cy%3D%228.5%22%20r%3D%221.4%22%20fill%3D%22white%22/%3E%0A%20%20%3C/g%3E%0A%0A%20%20%3C%21--%20diagonal%20ribbon%20banner%2C%20bottom-left%20to%20top-right%20--%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%22-14%22%20y%3D%2227%22%20width%3D%2292%22%20height%3D%2213%22%20fill%3D%22%230F1420%22%20fill-opacity%3D%220.82%22%20transform%3D%22rotate%28-45%2032%2032%29%22/%3E%0A%20%20%20%20%3Ctext%20x%3D%2232%22%20y%3D%2236.2%22%20transform%3D%22rotate%28-45%2032%2032%29%22%20text-anchor%3D%22middle%22%0A%20%20%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-weight%3D%22bold%22%20font-size%3D%228.6%22%0A%20%20%20%20%20%20%20%20%20%20letter-spacing%3D%220.3%22%20fill%3D%22white%22%3ESHOPCHECKER%3C/text%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E%0A">
+<meta name="theme-color" content="#241129">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root {
+    --bg-deep: #241129;
+    --bg-deep-2: #2E1638;
+    --paper: #FDF9F0;
+    --paper-shadow: #EFE8D8;
+    --ink: #241a30;
+    --muted: #8b7e95;
+    --pink: #E11D74;
+    --pink-dark: #B71360;
+    --green: #0F9D65;
+    --green-bg: #E4F7EF;
+    --line: #E3DCC9;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: radial-gradient(circle at 20% 0%, var(--bg-deep-2), var(--bg-deep) 60%);
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+    min-height: 100vh;
+  }
+  .brand {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .brand .tag {
+    display: inline-block;
+    background: var(--pink);
+    color: white;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    border-radius: 3px;
+    transform: rotate(-3deg);
+    box-shadow: 0 3px 0 var(--pink-dark);
+  }
+  .brand h1 {
+    font-family: 'Archivo Black', sans-serif;
+    color: #fff;
+    font-size: 30px;
+    margin: 14px 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .brand p {
+    color: #c9bcd6;
+    font-size: 13.5px;
+    margin: 0;
+  }
+
+  .receipt {
+    background: var(--paper);
+    position: relative;
+    padding: 26px 20px 8px;
+    box-shadow: 0 20px 45px -12px rgba(0,0,0,0.55);
+  }
+  .zig-top, .zig-bottom {
+    height: 12px;
+    width: 100%;
+    background:
+      linear-gradient(-45deg, var(--paper) 6px, transparent 0) 0 4px,
+      linear-gradient(45deg, var(--paper) 6px, transparent 0) 0 4px;
+    background-color: transparent;
+    background-size: 16px 16px;
+    background-repeat: repeat-x;
+  }
+  .zig-top {
+    transform: translateY(1px);
+    background:
+      linear-gradient(135deg, var(--bg-deep) 8px, transparent 0) 0 -4px,
+      linear-gradient(-135deg, var(--bg-deep) 8px, transparent 0) 0 -4px;
+    background-color: var(--paper);
+    background-size: 16px 16px;
+    background-repeat: repeat-x;
+  }
+  .zig-bottom {
+    background:
+      linear-gradient(45deg, var(--bg-deep) 8px, transparent 0) 0 4px,
+      linear-gradient(-45deg, var(--bg-deep) 8px, transparent 0) 0 4px;
+    background-color: var(--paper);
+    background-size: 16px 16px;
+    background-repeat: repeat-x;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 4px 0 10px;
+  }
+
+  form.additem {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 10px;
+    margin-bottom: 18px;
+  }
+  form.additem .full { grid-column: 1 / -1; }
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px dashed var(--line);
+    background: transparent;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    padding: 6px 2px;
+    color: var(--ink);
+  }
+  input:focus {
+    outline: none;
+    border-bottom-color: var(--pink);
+  }
+  input::placeholder { color: #c7bfa8; }
+
+  .add-btn {
+    grid-column: 1 / -1;
+    background: var(--pink);
+    color: white;
+    border: none;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    padding: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--pink-dark);
+    transition: transform 0.08s ease;
+  }
+  .add-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--pink-dark);
+  }
+
+  .divider {
+    border: none;
+    border-top: 2px dotted var(--line);
+    margin: 18px 0 14px;
+  }
+
+  .items { min-height: 8px; }
+  .empty-state {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13.5px;
+    padding: 18px 0 26px;
+    font-style: italic;
+  }
+
+  .item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+    gap: 10px;
+  }
+  .item-info { flex: 1; min-width: 0; }
+  .item-name {
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .item-meta .pct {
+    color: var(--pink);
+    font-weight: 600;
+  }
+  .item-prices {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    white-space: nowrap;
+  }
+  .old-price {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+  .new-price {
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .del-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 0 0 4px;
+  }
+  .del-btn:hover { color: var(--pink); }
+
+  .totals {
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .totals .row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 4px 0;
+    color: #4a3f57;
+  }
+  .totals .row.due {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    padding-top: 10px;
+    border-top: 2px solid var(--ink);
+    margin-top: 6px;
+  }
+
+  /* --- Budget --- */
+  .budget-block {
+    margin-bottom: 16px;
+  }
+  .budget-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .budget-row > div { flex: 1; }
+  .budget-status {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    display: none;
+  }
+  .budget-status.ok {
+    display: block;
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1.5px solid var(--green);
+  }
+  .budget-status.warn {
+    display: block;
+    background: #FFF4E0;
+    color: #B4650A;
+    border: 1.5px solid #E08A1E;
+  }
+  .budget-status.danger {
+    display: block;
+    background: #FDE8ED;
+    color: var(--pink-dark);
+    border: 1.5px solid var(--pink);
+  }
+  .savings-banner {
+    margin-top: 14px;
+    background: var(--green-bg);
+    color: var(--green);
+    border: 2px solid var(--green);
+    border-radius: 4px;
+    padding: 12px 14px;
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 15px;
+    transform: rotate(-1deg);
+    display: none;
+  }
+  .savings-banner.show {
+    display: block;
+    animation: stamp 0.35s ease;
+  }
+  @keyframes stamp {
+    0% { transform: scale(1.5) rotate(-1deg); opacity: 0; }
+    60% { transform: scale(0.95) rotate(-1deg); opacity: 1; }
+    100% { transform: scale(1) rotate(-1deg); opacity: 1; }
+  }
+
+  .barcode {
+    margin: 22px 0 4px;
+    height: 34px;
+    background-image: repeating-linear-gradient(90deg, var(--ink) 0px, var(--ink) 2px, transparent 2px, transparent 5px);
+    opacity: 0.75;
+  }
+  .footer-note {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    padding: 10px 0 4px;
+  }
+
+  /* --- Winkels in de buurt --- */
+  .nearby-section {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 2px dotted var(--line);
+  }
+  .nearby-btn {
+    width: 100%;
+    background: var(--ink);
+    color: white;
+    border: none;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    padding: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #0d0714;
+    transition: transform 0.08s ease;
+  }
+  .nearby-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #0d0714;
+  }
+  .nearby-status {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    padding: 14px 4px;
+    font-style: italic;
+  }
+  .nearby-status.error {
+    color: var(--pink-dark);
+    font-style: normal;
+  }
+  #nearbyMap {
+    width: 100%;
+    height: 280px;
+    margin-top: 12px;
+    border: 2px solid var(--ink);
+    display: none;
+  }
+  .osm-credit {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    padding: 8px 4px 0;
+    line-height: 1.5;
+  }
+  .osm-credit a { color: var(--pink-dark); }
+  .leaflet-popup-content-wrapper {
+    font-family: 'Inter', sans-serif;
+    border-radius: 4px;
+  }
+  .leaflet-popup-content b {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .savings-banner.show { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="brand">
+    <span class="tag">SALE</span>
+    <h1>ShopCheck</h1>
+    <p>Reken je korting uit voor je afrekent</p>
+  </div>
+
+  <div class="receipt">
+    <div class="zig-top"></div>
+
+    <div style="padding: 4px 4px 0;">
+      <div class="budget-block">
+        <div class="section-label">Jouw budget (optioneel)</div>
+        <div class="budget-row">
+          <div>
+            <label for="budget">Budget (€)</label>
+            <input id="budget" type="text" placeholder="bv. 100" inputmode="decimal">
+          </div>
+        </div>
+        <div class="budget-status" id="budgetStatus"></div>
+      </div>
+
+      <div class="section-label">Artikel toevoegen</div>
+      <form class="additem" id="itemForm">
+        <div class="full">
+          <label for="naam">Artikel</label>
+          <input id="naam" type="text" placeholder="bv. Jurk Zara" required>
+        </div>
+        <div>
+          <label for="prijs">Prijs (€)</label>
+          <input id="prijs" type="text" placeholder="39.99 of 39,99" required inputmode="decimal">
+        </div>
+        <div>
+          <label for="korting">Korting (%)</label>
+          <input id="korting" type="text" placeholder="30" required inputmode="decimal">
+        </div>
+        <button type="submit" class="add-btn">+ Toevoegen aan mandje</button>
+      </form>
+
+      <hr class="divider">
+
+      <div class="section-label">Jouw mandje</div>
+      <div class="items" id="itemsList">
+        <div class="empty-state" id="emptyState">Nog niets toegevoegd — vul hierboven je eerste artikel in.</div>
+      </div>
+
+      <div class="totals" id="totals" style="display:none;">
+        <div class="row"><span>Oorspronkelijke prijs</span><span id="totalOriginal">€0.00</span></div>
+        <div class="row due"><span>Te betalen</span><span id="totalDue">€0.00</span></div>
+      </div>
+
+      <div class="savings-banner" id="savingsBanner">
+        JE BESPAART €<span id="savingsAmount">0.00</span> ✂
+      </div>
+
+      <div class="nearby-section">
+        <div class="section-label">Winkels in de buurt</div>
+        <button type="button" class="nearby-btn" id="nearbyBtn">📍 Toon soortgelijke winkels bij mij in de buurt</button>
+        <div class="nearby-status" id="nearbyStatus" style="display:none;"></div>
+        <div id="nearbyMap"></div>
+        <div class="osm-credit" id="osmCredit" style="display:none;">
+          Kaartgegevens © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-medewerkers ·
+          Mis je een winkel? <a href="https://www.openstreetmap.org/edit" target="_blank" rel="noopener">Voeg ze zelf toe</a>
+        </div>
+      </div>
+
+      <div class="barcode"></div>
+      <div class="footer-note">SHOPCHECK · REKEN ROND VOOR JE KOOPT</div>
+    </div>
+
+    <div class="zig-bottom"></div>
+  </div>
+</div>
+
+<script>
+  /*
+    Bridge naar Python (voor wie dit leert programmeren):
+    - JavaScript "function" = Python "def"
+    - JavaScript object {naam: ..., prijs: ...} = Python dictionary
+    - JavaScript array [item1, item2] = Python lijst
+    - JavaScript .forEach(item => ...) = Python "for item in lijst:"
+    Zelfde denkwijze, andere schrijfwijze.
+  */
+
+  const STORAGE_KEY = "shopcheck_items";
+
+  // Sommige browsers (bv. bij het openen van een lokaal bestand, of in
+  // een in-app browser zoals WhatsApp) staan localStorage niet toe.
+  // In dat geval onthouden we het mandje enkel zolang de pagina open blijft.
+  let opslagBeschikbaar = true;
+
+  function laadMandje() {
+    try {
+      const opgeslagen = localStorage.getItem(STORAGE_KEY);
+      return opgeslagen ? JSON.parse(opgeslagen) : [];
+    } catch (fout) {
+      opslagBeschikbaar = false;
+      return [];
+    }
+  }
+
+  function slaMandjeOp(mandje) {
+    if (!opslagBeschikbaar) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mandje));
+    } catch (fout) {
+      opslagBeschikbaar = false;
+    }
+  }
+
+  // Zelfde logica als de Python-functie bereken_prijs_na_korting
+  function berekenPrijsNaKorting(prijs, kortingProcent) {
+    return prijs * (1 - kortingProcent / 100);
+  }
+
+  /*
+    Budgetlogica — vertaald uit het Python-script dat we samen bouwden:
+
+    def bereken_totaal(mandje):
+        totaal = 0
+        for item in mandje:
+            totaal = totaal + item["prijs_na_korting"]
+        return totaal
+
+    def controleer_budget(totaal, budget):
+        if totaal > budget:
+            return "over budget"
+        elif totaal >= budget * 0.9:
+            return "dicht bij de limiet"
+        else:
+            return "binnen budget"
+  */
+  function berekenTotaal(mandje) {
+    let totaal = 0;
+    for (const item of mandje) {
+      totaal = totaal + berekenPrijsNaKorting(item.prijs, item.korting);
+    }
+    return totaal;
+  }
+
+  function controleerBudget(totaal, budget) {
+    if (totaal > budget) {
+      return "over budget";
+    } else if (totaal >= budget * 0.9) {
+      return "dicht bij de limiet";
+    } else {
+      return "binnen budget";
+    }
+  }
+
+  const BUDGET_KEY = "shopcheck_budget";
+
+  function laadBudget() {
+    try {
+      const opgeslagen = localStorage.getItem(BUDGET_KEY);
+      return opgeslagen || "";
+    } catch (fout) {
+      return "";
+    }
+  }
+
+  function slaBudgetOp(waarde) {
+    try {
+      localStorage.setItem(BUDGET_KEY, waarde);
+    } catch (fout) { /* geen opslag beschikbaar, geen probleem */ }
+  }
+
+  function updateBudgetStatus() {
+    const budgetVeld = document.getElementById("budget");
+    const statusDiv = document.getElementById("budgetStatus");
+    const budget = parseGetal(budgetVeld.value);
+
+    if (!budgetVeld.value.trim() || isNaN(budget) || budget <= 0) {
+      statusDiv.className = "budget-status";
+      statusDiv.textContent = "";
+      return;
+    }
+
+    const totaal = berekenTotaal(mandje);
+    const status = controleerBudget(totaal, budget);
+    const resterend = budget - totaal;
+
+    let klasse, tekst;
+    if (status === "over budget") {
+      klasse = "danger";
+      tekst = `Je zit €${formatEuro(Math.abs(resterend))} over je budget van €${formatEuro(budget)}.`;
+    } else if (status === "dicht bij de limiet") {
+      klasse = "warn";
+      tekst = `Bijna aan je limiet — nog €${formatEuro(resterend)} te besteden.`;
+    } else {
+      klasse = "ok";
+      tekst = `Binnen budget — nog €${formatEuro(resterend)} te besteden.`;
+    }
+
+    statusDiv.className = "budget-status " + klasse;
+    statusDiv.textContent = tekst;
+  }
+
+  document.getElementById("budget").value = laadBudget();
+  document.getElementById("budget").addEventListener("input", function () {
+    slaBudgetOp(this.value);
+    updateBudgetStatus();
+  });
+
+  function formatEuro(bedrag) {
+    return bedrag.toFixed(2).replace(".", ".");
+  }
+
+  let mandje = laadMandje();
+
+  function renderMandje() {
+    const lijst = document.getElementById("itemsList");
+    const totalsBlok = document.getElementById("totals");
+    const savingsBanner = document.getElementById("savingsBanner");
+
+    if (mandje.length === 0) {
+      // Bouw het "leeg mandje"-bericht rechtstreeks opnieuw op, in plaats
+      // van een oude, mogelijk losgekoppelde node te hergebruiken.
+      lijst.innerHTML = '<div class="empty-state">Nog niets toegevoegd — vul hierboven je eerste artikel in.</div>';
+      totalsBlok.style.display = "none";
+      savingsBanner.classList.remove("show");
+      updateBudgetStatus();
+      return;
+    }
+
+    lijst.innerHTML = "";
+
+    let totaalOrigineel = 0;
+    let totaalTeBetalen = 0;
+
+    mandje.forEach(function (item, index) {
+      const nieuwePrijs = berekenPrijsNaKorting(item.prijs, item.korting);
+      totaalOrigineel += item.prijs;
+      totaalTeBetalen += nieuwePrijs;
+
+      const row = document.createElement("div");
+      row.className = "item-row";
+      row.innerHTML = `
+        <div class="item-info">
+          <div class="item-name">${escapeHtml(item.naam)}</div>
+          <div class="item-meta"><span class="pct">-${item.korting}%</span> korting</div>
+        </div>
+        <div class="item-prices">
+          <div class="old-price">€${formatEuro(item.prijs)}</div>
+          <div class="new-price">€${formatEuro(nieuwePrijs)}</div>
+        </div>
+        <button class="del-btn" aria-label="Verwijder ${escapeHtml(item.naam)}" data-index="${index}">✕</button>
+      `;
+      lijst.appendChild(row);
+    });
+
+    document.getElementById("totalOriginal").textContent = "€" + formatEuro(totaalOrigineel);
+    document.getElementById("totalDue").textContent = "€" + formatEuro(totaalTeBetalen);
+    totalsBlok.style.display = "block";
+
+    const besparing = totaalOrigineel - totaalTeBetalen;
+    if (besparing > 0) {
+      document.getElementById("savingsAmount").textContent = formatEuro(besparing);
+      savingsBanner.classList.remove("show");
+      void savingsBanner.offsetWidth; // herstart animatie
+      savingsBanner.classList.add("show");
+    } else {
+      savingsBanner.classList.remove("show");
+    }
+
+    updateBudgetStatus();
+  }
+
+  function escapeHtml(tekst) {
+    const div = document.createElement("div");
+    div.textContent = tekst;
+    return div.innerHTML;
+  }
+
+  // Zet zowel "39,99" als "39.99" om naar een bruikbaar getal (39.99).
+  // Sommige telefoons (bv. Nederlandstalig ingesteld) tonen enkel een
+  // komma op het toetsenbord, geen punt.
+  function parseGetal(tekst) {
+    const schoon = tekst.trim().replace(",", ".");
+    return parseFloat(schoon);
+  }
+
+  document.getElementById("itemForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const naam = document.getElementById("naam").value.trim();
+    const prijs = parseGetal(document.getElementById("prijs").value);
+    const korting = parseGetal(document.getElementById("korting").value);
+
+    if (!naam || isNaN(prijs) || isNaN(korting) || prijs < 0 || korting < 0 || korting > 100) {
+      alert("Vul een geldige prijs en een korting tussen 0 en 100 in.");
+      return;
+    }
+
+    mandje.push({ naam: naam, prijs: prijs, korting: korting });
+    slaMandjeOp(mandje);
+    renderMandje();
+
+    e.target.reset();
+    document.getElementById("naam").focus();
+  });
+
+  document.getElementById("itemsList").addEventListener("click", function (e) {
+    const btn = e.target.closest(".del-btn");
+    if (!btn) return;
+    const index = parseInt(btn.getAttribute("data-index"), 10);
+    mandje.splice(index, 1);
+    slaMandjeOp(mandje);
+    renderMandje();
+  });
+
+  renderMandje();
+
+  /*
+    Winkels in de buurt — locatie + kaart
+    Gebruikt OpenStreetMap (via Leaflet.js) en de gratis Overpass API,
+    in plaats van Google Maps — geen account of betaalgegevens nodig.
+  */
+
+  const SHOP_TYPES = ["clothes", "shoes", "boutique", "jewelry", "accessories", "bag", "leather", "fashion_accessories", "department_store", "variety_store"];
+  const SHOP_LABELS = {
+    clothes: "Kledingwinkel", shoes: "Schoenenwinkel", boutique: "Boetiek",
+    jewelry: "Juwelier", accessories: "Accessoires", bag: "Tassenwinkel",
+    leather: "Lederwaren", fashion_accessories: "Modeaccessoires",
+    department_store: "Warenhuis", variety_store: "Winkel"
+  };
+
+  let nearbyMap = null;
+
+  function toonNearbyStatus(tekst, isFout) {
+    const status = document.getElementById("nearbyStatus");
+    status.textContent = tekst;
+    status.style.display = "block";
+    status.className = "nearby-status" + (isFout ? " error" : "");
+  }
+
+  document.getElementById("nearbyBtn").addEventListener("click", function () {
+    if (!navigator.geolocation) {
+      toonNearbyStatus("Locatie wordt niet ondersteund op dit toestel.", true);
+      return;
+    }
+
+    toonNearbyStatus("Locatie opvragen — bevestig de toestemming die je telefoon vraagt...", false);
+
+    navigator.geolocation.getCurrentPosition(
+      function (positie) {
+        const lat = positie.coords.latitude;
+        const lon = positie.coords.longitude;
+        toonWinkelsInDeBuurt(lat, lon);
+      },
+      function (fout) {
+        if (fout.code === fout.PERMISSION_DENIED) {
+          toonNearbyStatus("Geen toestemming gekregen voor locatie. Zet dit aan bij de site-instellingen van je browser om deze functie te gebruiken.", true);
+        } else {
+          toonNearbyStatus("Kon je locatie niet bepalen. Probeer het opnieuw.", true);
+        }
+      }
+    );
+  });
+
+  function toonWinkelsInDeBuurt(lat, lon) {
+    toonNearbyStatus("Winkels in de buurt zoeken...", false);
+
+    const mapDiv = document.getElementById("nearbyMap");
+    mapDiv.style.display = "block";
+
+    if (!nearbyMap) {
+      nearbyMap = L.map("nearbyMap");
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: ""
+      }).addTo(nearbyMap);
+    }
+
+    nearbyMap.setView([lat, lon], 16);
+
+    const jijIcon = L.divIcon({
+      html: '<div style="background:#E11D74;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #E11D74;"></div>',
+      className: "", iconSize: [16, 16], iconAnchor: [8, 8]
+    });
+    L.marker([lat, lon], { icon: jijIcon }).addTo(nearbyMap).bindPopup("<b>Jij bent hier</b>");
+
+    const regex = SHOP_TYPES.join("|");
+    const query = `[out:json][timeout:15];(node["shop"~"^(${regex})$"](around:800,${lat},${lon}););out body;`;
+    const url = "https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query);
+
+    fetch(url)
+      .then(function (response) {
+        if (!response.ok) throw new Error("netwerkfout");
+        return response.json();
+      })
+      .then(function (data) {
+        const winkels = data.elements || [];
+        if (winkels.length === 0) {
+          toonNearbyStatus("Geen soortgelijke winkels gevonden binnen 800m van jouw locatie.", false);
+        } else {
+          toonNearbyStatus(`${winkels.length} winkel(s) gevonden binnen 800m.`, false);
+        }
+        winkels.forEach(function (winkel) {
+          const naam = (winkel.tags && winkel.tags.name) ? winkel.tags.name : "Naamloze winkel";
+          const type = (winkel.tags && winkel.tags.shop) ? (SHOP_LABELS[winkel.tags.shop] || winkel.tags.shop) : "Winkel";
+          L.marker([winkel.lat, winkel.lon]).addTo(nearbyMap)
+            .bindPopup(`<b>${escapeHtml(naam)}</b><br>${escapeHtml(type)}`);
+        });
+        document.getElementById("osmCredit").style.display = "block";
+      })
+      .catch(function () {
+        toonNearbyStatus("Kon geen winkels ophalen — probeer het straks opnieuw.", true);
+        document.getElementById("osmCredit").style.display = "block";
+      });
+  }
+</script>
+</body>
+</html>
